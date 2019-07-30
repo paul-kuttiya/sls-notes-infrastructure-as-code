@@ -29,9 +29,9 @@ resources:
   # s3-bucket
   - ${file(resources/s3-bucket.yml)}
   # Cognito userPool
-  - ${file(resources/cognito-user-pool)}
+  - ${file(resources/cognito-user-pool.yml)}
   # Cognito userIdentity
-  - ${file(resources/cognito-identity-pool)}
+  - ${file(resources/cognito-identity-pool.yml)}
 
 provider:
   name: aws
