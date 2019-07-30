@@ -1,4 +1,4 @@
-service: pk-sls-notes-api
+service: pk-sls-notes-api-v2
 # Create an optimized package for our functions
 package:
   individually: true
@@ -13,16 +13,35 @@ custom:
   #   host: 0.0.0.0
   #   port: 3000
 
+  # opt:stage is from what will passed in from sls command line: 
+  # deploy --stage $STAGE_NAME
+  # fallback to provider.stage -> which is dev
+  stage: ${opt:stage, self:provider.stage}
+  # setting table name to ${STAGE}-notes
+  tableName: ${self:custom.stage}-notes
+
 # Create our resources with separate CloudFormation templates
 resources:
   # API Gateway Errors
   - ${file(resources/api-gateway-cors.yml)}
+  # DynamoDB
+  - ${file(resources/dynamoDB.yml)}
+  # s3-bucket
+  - ${file(resources/s3-bucket.yml)}
+  # Cognito userPool
+  - ${file(resources/cognito-user-pool)}
+  # Cognito userIdentity
+  - ${file(resources/cognito-identity-pool)}
 
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: prod
+  stage: dev
   region: us-east-1
+
+  # will be available in process.env.tableName
+  environment:
+    tableName: ${self:custom.tableName}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   # In this case Lambda functions are granted with permissions to access DynamoDB.
@@ -36,7 +55,12 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+      
+      # allow this lambda to have IAM Action access only to Resource below
+      # which is NotesTable
+      # -> Resource: get Arn for NotesTable defined in NotesTable dynamoDB.yml; 
+      Resource:
+        - "Fn::GetAtt": [ NotesTable, Arn ]
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js

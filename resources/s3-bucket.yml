@@ -1,0 +1,27 @@
+Resources:
+  # resource name
+  AttachmentsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      # Set the CORS policy
+      CorsConfiguration:
+        CorsRules:
+          -
+            AllowedOrigins:
+              - '*'
+            AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+              - HEAD
+            MaxAge: 3000
+
+# S3 name needs to be unique, will auto generated and output out
+# when created, print out the name of the bucket that is created
+Outputs:
+  AttachmentsBucketName:
+    Value:
+      Ref: AttachmentsBucket

@@ -14,7 +14,7 @@ const main = async event => {
   console.log(event);
 
   const params = {
-    TableName: "notes",
+    TableName: process.env.TableName,
     Item: {
       // 'Item' contains the attributes of the item to be created
       // - 'userId': user identities are federated through the

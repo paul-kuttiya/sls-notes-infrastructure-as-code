@@ -5,7 +5,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 const main = async event => {
   const params = {
-    TableName: "notes",
+    TableName: process.env.TableName,
     // key is partition key and sort key
     // userId -> user id from Identity Pool identity
     Key: {
