@@ -6,7 +6,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const main = async event => {
   const reqBody = JSON.parse(event.body);
   const params = {
-    TableName: process.env.TableName,
+    TableName: process.env.tableName,
     // 'Key' for the partition key and sort key of the item to be updated
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,

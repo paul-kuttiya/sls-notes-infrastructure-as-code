@@ -5,7 +5,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 const main = async event => {
   const params = {
-    TableName: process.env.TableName,
+    TableName: process.env.tableName,
     // 'Key' is partition key and sort key of the item to be removed from table
     Key: {
       // Using AWS-Amplify on the front end,

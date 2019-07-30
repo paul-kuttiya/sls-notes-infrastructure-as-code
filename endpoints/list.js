@@ -5,7 +5,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 const main = async event => {
   const params = {
-    TableName: process.env.TableName,
+    TableName: process.env.tableName,
     // 'KeyConditionExpression' defines the condition for the query
     // -> 'userId = :userId': only return items with matching 'userId' partition key
     // 'ExpressionAttributeValues' defines the value of the condition
