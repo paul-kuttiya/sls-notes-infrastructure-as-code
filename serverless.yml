@@ -36,6 +36,7 @@ resources:
 provider:
   name: aws
   runtime: nodejs8.10
+  # overide deploy stage by running `sls deploy --stage $STAGE_NAME`
   stage: dev
   region: us-east-1
 
