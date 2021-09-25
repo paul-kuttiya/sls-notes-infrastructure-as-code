@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: sls-notes-infrastructure-as-code
+  annotations:
+    github.com/project-slug: pookzzz2231/sls-notes-infrastructure-as-code
+spec:
+  type: other
+  lifecycle: unknown
+  owner: backstage
